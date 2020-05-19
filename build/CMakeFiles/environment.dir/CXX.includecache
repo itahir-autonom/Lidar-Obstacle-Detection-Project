@@ -56,10 +56,6 @@ render/box.h
 Eigen/Geometry
 -
 
-/home/irfan/SFND_Lidar_Obstacle_Detection-master/src/render/render.cpp
-render.h
-/home/irfan/SFND_Lidar_Obstacle_Detection-master/src/render/render.h
-
 /home/irfan/SFND_Lidar_Obstacle_Detection-master/src/render/render.h
 pcl/visualization/pcl_visualizer.h
 -
