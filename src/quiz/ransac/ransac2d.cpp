@@ -129,7 +129,6 @@ std::unordered_set<int> Ransacplane(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, i
         }
 
         float a,b,c,d,x1,y1,z1,x2,y2,z2,x3,y3,z3;
-        std::vector<float> v1,v2;
         auto itr=inliers.begin();
         x1=cloud->points[*itr].x;
         y1=cloud->points[*itr].y;

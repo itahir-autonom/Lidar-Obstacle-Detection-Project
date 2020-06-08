@@ -15,6 +15,7 @@ struct Node
 	Node(std::vector<float> arr, int setId)
 	:	point(arr), id(setId), left(NULL), right(NULL)
 	{}
+
 };
 
 struct KdTree
@@ -25,17 +26,76 @@ struct KdTree
 	: root(NULL)
 	{}
 
+	void insertNode(Node** node,uint depth,std::vector<float> point, int id){
+		if (*node == NULL){
+			*node =new Node(point,id);
+		}
+		else
+		{
+			uint cd=depth%2;
+
+			if (point[cd]<((*node)->point[cd]))
+			{
+				insertNode(&(*node)->left,depth+1,point,id);
+			}
+			else
+			{
+				insertNode(&(*node)->right,depth+1,point,id);
+			}
+		}
+	}
+
+
 	void insert(std::vector<float> point, int id)
 	{
 		// TODO: Fill in this function to insert a new point into the tree
 		// the function should create a new node and place correctly with in the root 
 
+		insertNode(&root, 0, point, id);
+
 	}
+
+
+	void searchNode(std::vector<float> target,Node* node,int depth,float distanceTol,std::vector<int> ids)
+	{
+		if (node!=NULL)
+		{
+			float dx=node->point[0]-target[0];
+			float dy=node->point[1]-target[1];
+
+			if(-distanceTol<=dx && distanceTol>=dx && -distanceTol<=dy && distanceTol>=dy)
+			{
+				float distance=sqrt(dx*dx+dy*dy);
+				if (distance<=distanceTol)
+				{
+					ids.push_back(node->id);
+				}
+			}
+
+			int cd=depth%2;
+			if ((target[cd]-distanceTol)<(node->point[cd]))
+			{
+				searchNode(target,node->left,depth+1,distanceTol,ids);
+			}
+			else if((target[cd]+distanceTol)>(node->point[cd]))
+			{
+				searchNode(target,node->right,depth+1,distanceTol,ids);
+			}
+				
+			
+
+		}
+
+
+	}	
+
 
 	// return a list of point ids in the tree that are within distance of target
 	std::vector<int> search(std::vector<float> target, float distanceTol)
 	{
+		
 		std::vector<int> ids;
+		searchNode(target,root,0,distanceTol,ids);
 		return ids;
 	}
 	
