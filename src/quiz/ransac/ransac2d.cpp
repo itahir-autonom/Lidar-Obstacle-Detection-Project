@@ -102,6 +102,7 @@ std::unordered_set<int> Ransac(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, int ma
         }
         
     }
+    
     // For max iterations 
 
     // Randomly sample subset and fit line
@@ -164,7 +165,7 @@ std::unordered_set<int> Ransacplane(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, i
         
     }
     
-    return inliersResult;
+    
 
 }
 

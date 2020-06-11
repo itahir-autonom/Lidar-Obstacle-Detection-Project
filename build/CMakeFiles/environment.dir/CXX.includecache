@@ -19,8 +19,6 @@ processPointClouds.cpp
 /home/irfan/SFND_Lidar_Obstacle_Detection-master/src/processPointClouds.cpp
 processPointClouds.h
 /home/irfan/SFND_Lidar_Obstacle_Detection-master/src/processPointClouds.h
-unordered_set
--
 
 /home/irfan/SFND_Lidar_Obstacle_Detection-master/src/processPointClouds.h
 pcl/io/pcd_io.h
@@ -53,6 +51,14 @@ chrono
 -
 render/box.h
 /home/irfan/SFND_Lidar_Obstacle_Detection-master/src/render/box.h
+quiz/cluster/kdtree.h
+/home/irfan/SFND_Lidar_Obstacle_Detection-master/src/quiz/cluster/kdtree.h
+unordered_set
+-
+
+/home/irfan/SFND_Lidar_Obstacle_Detection-master/src/quiz/cluster/kdtree.h
+../../render/render.h
+/home/irfan/SFND_Lidar_Obstacle_Detection-master/src/render/render.h
 
 /home/irfan/SFND_Lidar_Obstacle_Detection-master/src/render/box.h
 Eigen/Geometry

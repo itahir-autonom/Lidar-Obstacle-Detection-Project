@@ -1,3 +1,4 @@
+//Edit:Irfan Tahir
 // PCL lib Functions for processing point clouds 
 
 #ifndef PROCESSPOINTCLOUDS_H_
@@ -18,6 +19,8 @@
 #include <ctime>
 #include <chrono>
 #include "render/box.h"
+#include "quiz/cluster/kdtree.h"
+#include <unordered_set>
 
 template<typename PointT>
 class ProcessPointClouds {
@@ -45,6 +48,11 @@ public:
     typename pcl::PointCloud<PointT>::Ptr loadPcd(std::string file);
 
     std::vector<boost::filesystem::path> streamPcd(std::string dataPath);
-  
+
+    std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT>::Ptr> RansacSegmentPlane(typename pcl::PointCloud<PointT>::Ptr cloud, int maxIterations, float distanceThreshold);
+
+    void proximity(typename pcl::PointCloud<PointT>::Ptr cloud,typename pcl::PointCloud<PointT>::Ptr &cluster, std::vector<bool>& processed, KdTree* tree, int index, float distanceTol);
+
+    std::vector<typename pcl::PointCloud<PointT>::Ptr> EuclideanClustering(typename pcl::PointCloud<PointT>::Ptr cloud, float clusterTolerance, int minSize, int maxSize);
 };
 #endif /* PROCESSPOINTCLOUDS_H_ */

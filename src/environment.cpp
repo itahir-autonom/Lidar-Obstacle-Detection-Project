@@ -1,4 +1,4 @@
-/* \author Aaron Brown */
+//Edit:Irfan Tahir
 // Create simple 3d highway enviroment using PCL
 // for exploring self-driving car sensors
 
@@ -51,13 +51,15 @@ void cityBlock(pcl::visualization::PCLVisualizer::Ptr& viewer,ProcessPointClouds
 
 
     //Segmentation
-    std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr> segmentCloud = pointProcessorI->SegmentPlane(filterCloud, 100, 0.2);
-    //std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr> segmentCloud = pointProcessorI->Ransacplane(filterCloud, 100, 0.2);
-    renderPointCloud(viewer,segmentCloud.first,"SegmentCloud_obstacle",Color(1,0,0));
+    //std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr> segmentCloud = pointProcessorI->SegmentPlane(filterCloud, 100, 0.2);
+    std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr> segmentCloud = pointProcessorI->RansacSegmentPlane(filterCloud, 40, 0.2);
+    //renderPointCloud(viewer,segmentCloud.first,"SegmentCloud_obstacle",Color(1,0,0));
     renderPointCloud(viewer,segmentCloud.second,"SegmentCloud_surface",Color(0,1,0));
 
+    
     //Clustering
-    std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pointProcessorI->Clustering(segmentCloud.first, 0.45, 20, 500);
+    //std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pointProcessorI->Clustering(segmentCloud.first, 0.45, 20, 500);
+    std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pointProcessorI->EuclideanClustering(segmentCloud.first, 0.45, 20, 500);
 
     int clusterId = 0;
     std::vector<Color> colors = {Color(1,0,0), Color(1,1,0), Color(0,0,1)};
@@ -73,6 +75,7 @@ void cityBlock(pcl::visualization::PCLVisualizer::Ptr& viewer,ProcessPointClouds
 
        ++clusterId;
     }
+    
     
 }
 
@@ -159,10 +162,10 @@ int main (int argc, char** argv)
     std::vector<boost::filesystem::path> stream=pointProcessorI->streamPcd("../src/sensors/data/pcd/data_1");
     auto streamIterator=stream.begin();
     pcl::PointCloud<pcl::PointXYZI>::Ptr inputCloudI;
-
+    
     while (!viewer->wasStopped ())
     {
-
+        
         // Clear viewer
         viewer->removeAllPointClouds();
         viewer->removeAllShapes();
